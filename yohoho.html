@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yohoho • Pantalla Completa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Evita el scroll */
+        }
+
+        #game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-color: black; /* Fondo negro para el contenedor */
+        }
+
+        #fullscreen-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 2px solid white;
+            border-radius: 10px;
+            padding: 10px;
+            transition: background-color 0.3s;
+            font-size: 32px; /* Tamaño del icono */
+            color: black; /* Color del icono */
+            z-index: 10; /* Asegura que esté encima del juego */
+        }
+
+        #fullscreen-icon:hover {
+            background-color: rgba(255, 255, 255, 1); /* Efecto hover */
+        }
+
+        iframe {
+            border: none; /* Sin borde en el iframe */
+            width: 100%;
+            height: 100%;
+        }
+
+        #title { /* Estilo del título */
+            position: absolute;
+            top: 10px; /* Posición arriba */
+            left: 10px; /* Posición izquierda */
+            font-size: 24px;
+            color: white; /* Color del título */
+            z-index: 10; /* Asegura que esté encima del juego */
+            border: 3px solid black; /* Agrega borde negro */
+            padding: 5px 10px; /* Agrega padding */
+        }
+
+        /* Ocultar título e icono en pantalla completa */
+        #fullscreen-icon, #title {
+            display: block; /* Mostrar por defecto */
+        }
+
+        #game-container:fullscreen {
+            /* Estilos para cuando el contenedor está en pantalla completa */
+            #fullscreen-icon, #title {
+                display: none; /* Ocultar título e icono */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1 id="title">NAGI .  PLUS</h1> <!-• Título del juego -->
+        <div id="fullscreen-icon" title="Pantalla Completa"><i class="fas fa-expand-arrows-alt"></i></div>
+        <iframe src="https://yohoho.io/" allowfullscreen></iframe> <!-• Carga Lurkers -->
+    </div>
+
+    <script>
+        const fullscreenIcon = document.getElementById('fullscreen-icon');
+        const gameContainer = document.getElementById('game-container');
+
+        fullscreenIcon.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                gameContainer.requestFullscreen().catch(err => {
+                    console.error(`Error al intentar activar pantalla completa: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        });
+
+        document.addEventListener('fullscreenchange', () => {
+            if (document.fullscreenElement) {
+                fullscreenIcon.style.display = 'none'; // Ocultar el botón
+            } else {
+                fullscreenIcon.style.display = 'block'; // Mostrar el botón
+            }
+        });
+    </script>
+</body>
+</html>
